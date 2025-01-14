@@ -1,0 +1,14 @@
+[14-Jan-2025 06:57:45 UTC] PHP Warning:  Module "redis" is already loaded in Unknown on line 0
+[14-Jan-2025 06:57:45 Europe/London] PHP Warning:  Version warning: Imagick was compiled against ImageMagick version 1692 but version 1693 is loaded. Imagick will run but may behave surprisingly in Unknown on line 0
+[14-Jan-2025 06:57:58 UTC] PHP Warning:  Module "redis" is already loaded in Unknown on line 0
+[14-Jan-2025 06:57:58 Europe/London] PHP Warning:  Version warning: Imagick was compiled against ImageMagick version 1692 but version 1693 is loaded. Imagick will run but may behave surprisingly in Unknown on line 0
+[14-Jan-2025 06:57:59 UTC] PHP Warning:  Module "redis" is already loaded in Unknown on line 0
+[14-Jan-2025 06:57:59 Europe/London] PHP Warning:  Version warning: Imagick was compiled against ImageMagick version 1692 but version 1693 is loaded. Imagick will run but may behave surprisingly in Unknown on line 0
+[14-Jan-2025 06:58:08 UTC] PHP Warning:  Module "timezonedb" is already loaded in Unknown on line 0
+[14-Jan-2025 06:58:08 UTC] PHP Warning:  Module "redis" is already loaded in Unknown on line 0
+[14-Jan-2025 06:58:23 UTC] PHP Warning:  Module "timezonedb" is already loaded in Unknown on line 0
+[14-Jan-2025 06:58:23 UTC] PHP Warning:  Module "redis" is already loaded in Unknown on line 0
+[14-Jan-2025 07:02:52 UTC] PHP Warning:  Module "timezonedb" is already loaded in Unknown on line 0
+[14-Jan-2025 07:02:52 UTC] PHP Warning:  Module "redis" is already loaded in Unknown on line 0
+[14-Jan-2025 07:06:56 UTC] PHP Warning:  Module "timezonedb" is already loaded in Unknown on line 0
+[14-Jan-2025 07:06:56 UTC] PHP Warning:  Module "redis" is already loaded in Unknown on line 0
