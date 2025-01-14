@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use phpseclib3\Crypt\Hash;
 Use Str;
 Use Hash;
 use Illuminate\Auth\Events\PasswordReset;
@@ -68,7 +69,7 @@ class SessionsController extends Controller
             request()->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {
                 $user->forceFill([
-                    'password' => ($password)
+                    'password' => Hash::make($password)
                 ])->setRememberToken(Str::random(60));
 
                 $user->save();
