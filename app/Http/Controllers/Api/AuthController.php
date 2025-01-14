@@ -18,6 +18,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
@@ -153,14 +154,42 @@ class AuthController extends BaseController
      */
     public function forgetPassword(UserExistRequest $request): JsonResponse
     {
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
-        if ($status != Password::RESET_LINK_SENT)
-        {
-            return response()->json(['message' => 'Unable to send reset link.'], 500);
-        }
+        $user = User::where('email',$request->input('email'))->first();
+//        $status = Password::sendResetLink(
+//            $request->only('email')
+//        );
+//        if ($status != Password::RESET_LINK_SENT)
+//        {
+//            return response()->json(['message' => 'Unable to send reset link.'], 500);
+//        }
+        $user->active_code      = random_int(100000, 999999);
+        $user->save();
+
+        $user->notify(new activeUserNotification($user,$user->active_code));
         return response()->json(['message' => 'Reset link sent to your email.']);
+    }
+
+    /**
+     * @param activeCodeRequest $request
+     * @return JsonResponse
+     */
+    public function reset_code(activeCodeRequest $request): JsonResponse
+    {
+        $code = $request->input('code');
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+        $user = User::where('email',$email)->where('active_code',$code)->first();
+        if (!empty($user))
+        {
+            $user->password = Hash::make($password);
+            $user->active_code = null;
+            $user->save();
+        }else
+        {
+            return $this->failed('Invalid code');
+        }
+        return $this->success('success update');
     }
 
     /**

@@ -18,8 +18,18 @@ class activeCodeRequest extends APIRequest
         return true;
     }
 
-    public function rules(): array
+    protected function onUpdate(): array
+    {
+        $this->rules['password'] = 'required|string';
+        return $this->rules;
+    }
+    protected function onCreate(): array
     {
         return $this->rules;
+    }
+    public function rules(): array
+    {
+        return request()->isMethod('put') || request()->isMethod('patch') ?
+            $this->onUpdate() : $this->onCreate();
     }
 }

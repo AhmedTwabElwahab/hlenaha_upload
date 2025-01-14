@@ -5,7 +5,10 @@ use App\Http\Controllers\Api\BankAccountController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\notificationController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\ReportsController;
 use App\Http\Controllers\Api\SettingController;
+use App\Http\Controllers\Api\TransactionController;
+use App\Http\Controllers\Api\TripController;
 use App\Http\Controllers\Api\VerificationApiController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,9 +22,10 @@ Route::controller(AuthController::class)->group(function ()
     Route::get('logout','logout')->middleware('auth:sanctum');
     // password reset
     Route::post('verify-api','forgetPassword')->middleware('guest')->name('verify-api');
+    Route::put('password/reset','reset_code')->middleware('guest')->name('password_reset');
 });
 
-Route::get('/email/verify/{id}/{hash}',[VerificationApiController::class,'verify'])->name('verification.verify');
+//Route::get('/email/verify/{id}/{hash}',[VerificationApiController::class,'verify'])->name('verification.verify');
 
 
 Route::group(['middleware' => ['auth:sanctum']],function ()
@@ -54,5 +58,14 @@ Route::group(['middleware' => ['auth:sanctum']],function ()
     Route::get('notifications',[notificationController::class,'index'])->name('notifications.index');
     Route::get('notifications/unread',[notificationController::class,'unreadNotifications'])->name('notifications.un');
     Route::post('notifications/read',[notificationController::class,'read'])->name('notifications.read');
+
+    //reports
+    Route::get('reports',[ReportsController::class,'index'])->name('reports.index');
+
+    //transaction
+    Route::get('transaction',[TransactionController::class,'index'])->name('transaction.index');
+
+    //trips
+    Route::get('trip',[TripController::class,'index'])->name('trip.index');
 
 });

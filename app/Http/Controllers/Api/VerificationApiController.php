@@ -34,15 +34,10 @@ class VerificationApiController extends BaseController
     }
 
     /**
-
      * Mark the authenticated user’s email address as verified.
-
      *
-
      * @param \Illuminate\Http\Request $request
-
-     * @return \Illuminate\Http\Response
-
+     * @return \Illuminate\Http\JsonResponse
      */
 
     public function verify(Request $request)

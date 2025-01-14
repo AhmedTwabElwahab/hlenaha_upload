@@ -1,16 +1,16 @@
 <?php
 
+use App\Http\Controllers\Api\TripController;
 use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\MessageController;
-use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\TripController;
-use App\Http\Middleware\CheckAdmin;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Middleware\CheckAdmin;
+use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
 
