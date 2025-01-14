@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use phpseclib3\Crypt\Hash;
 Use Str;
-Use Hash;
 use Illuminate\Auth\Events\PasswordReset;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Password;
 
