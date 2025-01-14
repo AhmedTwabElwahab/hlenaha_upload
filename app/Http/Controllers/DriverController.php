@@ -24,7 +24,6 @@ class DriverController extends BaseController
      */
     public function index(Request $request): View
     {
-        dd('DONE');
         if ($request->has('search'))
         {
             $search = $request->get('search');
