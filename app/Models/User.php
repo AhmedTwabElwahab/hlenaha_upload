@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Http\Requests\web\UserRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -11,7 +10,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Contracts\Auth\CanResetPassword;
 
 /**
  * Class User
@@ -99,7 +97,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function driver():HasOne
     {
-        return $this->hasOne(Driver::class);
+        return $this->hasOne(driver::class);
     }
 
     public function linkedSocialAccounts(): HasOne
