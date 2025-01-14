@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use phpseclib3\Crypt\Hash;
+use Illuminate\Support\Facades\Hash;
 Use Str;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Validation\ValidationException;
