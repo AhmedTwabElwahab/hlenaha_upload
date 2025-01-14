@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class profileRequest extends APIRequest
 {
     protected array $rules = [
-        'name'              => 'sometimes|nullable|string',
+        'name'              => 'required|string',
         'phone'             => 'sometimes|nullable|string',
         'gender'            => 'sometimes|nullable|string',
         'birth_date'        => 'sometimes|nullable|date',

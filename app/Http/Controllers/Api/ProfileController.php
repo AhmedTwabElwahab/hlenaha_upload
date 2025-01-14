@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\profileRequest;
+use App\Http\Requests\Api\registerRequest;
 use App\Http\Requests\api\UserRestPasswordRequest;
+use App\Models\driver;
 use App\Models\User;
+use App\Notifications\activeUserNotification;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;

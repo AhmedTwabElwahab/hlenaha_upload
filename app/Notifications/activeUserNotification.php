@@ -7,16 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class adminNotification extends Notification
+class activeUserNotification extends Notification
 {
     use Queueable;
 
+    public $code;
     /**
      * Create a new notification instance.
      */
-    public function __construct($user)
+    public function __construct($user,$code)
     {
         $this->user = $user;
+        $this->code = $code;
     }
 
     /**
@@ -26,7 +28,7 @@ class adminNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['mail'];
     }
 
     /**
@@ -35,9 +37,10 @@ class adminNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line('hello, '.$this->user->name)
+                    ->line('active your account')
+                    ->line('activation code: '.$this->code)
+                    ->line('Thank you');
     }
 
     /**
@@ -48,8 +51,7 @@ class adminNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'name'  => $this->user->name,
-            'email' => $this->user->email,
+
         ];
     }
 }

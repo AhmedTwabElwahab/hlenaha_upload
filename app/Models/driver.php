@@ -59,12 +59,12 @@ class driver extends Model
     /**
      * @throws Exception
      */
-    public static function createDriver(DriverRequest $request,$user_id): Driver
+    public static function createDriver($request,$user_id): Driver
     {
         $Driver = new self();
 
         $Driver->name               = $request->input('name');
-        $Driver->id_number          = $request->input('id_number');
+        $Driver->id_number          = $request->input('id_number') ?? 0;
         $Driver->province           = $request->input('province')?? null;
         $Driver->city               = $request->input('city')?? null;
         $Driver->neighborhood       = $request->input('neighborhood')?? null;

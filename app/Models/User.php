@@ -78,9 +78,9 @@ class User extends Authenticatable implements MustVerifyEmail
         $user->name             = $request->input('name');
         $user->phone            = $request->input('phone');
         $user->email            = $request->input('email');
-        $user->password         = Hash::make(123456);
+        $user->password         = $request->input('password') !== null ? Hash::make($request->input('password')): Hash::make(123456);
         $user->role             = $request->input('role') ?? USER_ROLE;
-
+        $user->active_code      = random_int(100000, 999999);
         if (!$user->save())
         {
             throw new \Exception("Failed to create user");

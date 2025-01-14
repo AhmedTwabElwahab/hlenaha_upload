@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\Api\activeCodeRequest;
+use App\Http\Requests\Api\RegisterRequest;
 use App\Http\Requests\Api\SocialLoginRequest;
 use App\Http\Requests\Api\Users\LoginUserRequest;
 use App\Http\Requests\Api\Users\UserExistRequest;
 use App\Http\Requests\Api\Users\UserRestPasswordRequest;
+use App\Models\driver;
 use App\Models\LinkedSocialAccount;
 use App\Models\User;
+use App\Notifications\activeUserNotification;
 use Exception;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
@@ -48,6 +53,59 @@ class AuthController extends BaseController
             return $this->detect_user_role($email, $request->input('password'));
         }
     }
+
+    /**
+     * Store a new Driver in dataBase.
+     * @param RegisterRequest $request
+     * @return
+     */
+    public function register(RegisterRequest $request): JsonResponse
+    {
+        DB::beginTransaction();
+        try
+        {
+            $user = User::CreateUser($request);
+            if ($user)
+            {
+                Driver::createDriver($request,$user->id);
+
+                $user->notify(new activeUserNotification($user,$user->active_code));
+                DB::commit();
+            }
+            return $this->success( 'User registered successfully.');
+        } catch (Exception $e)
+        {
+            DB::rollBack();
+            $message = $this->handleException($e);
+            return $this->failed($message);
+        }
+    }
+
+    /**
+     *  active code.
+     * @param activeCodeRequest $request
+     * @return JsonResponse
+     */
+    public function active_account(activeCodeRequest $request): JsonResponse
+    {
+        $success = [];
+        $user = User::where('email',$request->input('email'))
+            ->where('active_code',$request->input('code'))->first();
+
+        if (!empty($user))
+        {
+            if (Auth::loginUsingId($user->id))
+            {
+                $success['token'] = Auth::user()->createToken('MY_TOKEN_API')->plainTextToken;
+                $user->email_verified_at = now();
+                $user->active_code = null;
+                $user->save();
+            }
+            return $this->sendResponse($success,'successfully.');
+        }
+        return $this->failed('Invalid code');
+    }
+
 
     /**
      * LOGOUT from API.

@@ -14,6 +14,8 @@ Route::controller(AuthController::class)->group(function ()
 {
     Route::get('/login','index')->name('login');
     Route::post('/login','login')->name('login');
+    Route::post('/register','register')->name('register');
+    Route::post('/active/account','active_account')->name('active_account');
     Route::get('logout','logout')->middleware('auth:sanctum');
     // password reset
     Route::post('verify-api','forgetPassword')->middleware('guest')->name('verify-api');

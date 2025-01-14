@@ -35,7 +35,7 @@ class DriverRequest extends FormRequest
     {
         $this->rules['user_id'] = 'sometimes|nullable|numeric';
         $this->rules['email']   = 'sometimes|nullable|email';
-        $this->rules['id_number'] = 'sometimes|nullable|numeric|';
+        $this->rules['id_number'] = 'sometimes|nullable|numeric';
         $this->rules['phone'] = 'sometimes|nullable|numeric';
         return $this->rules;
     }
