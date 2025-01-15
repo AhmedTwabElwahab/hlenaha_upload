@@ -23,6 +23,7 @@ Route::controller(AuthController::class)->group(function ()
     // password reset
     Route::post('verify-api','forgetPassword')->middleware('guest')->name('verify-api');
     Route::put('password/reset','reset_code')->middleware('guest')->name('password_reset');
+    Route::post('socialLogin','socialLogin')->middleware('guest')->name('socialLogin');
 });
 
 //Route::get('/email/verify/{id}/{hash}',[VerificationApiController::class,'verify'])->name('verification.verify');
@@ -63,9 +64,9 @@ Route::group(['middleware' => ['auth:sanctum']],function ()
     Route::get('reports',[ReportsController::class,'index'])->name('reports.index');
 
     //transaction
-    Route::get('transaction',[TransactionController::class,'index'])->name('transaction.index');
+    Route::get('transaction',[TransactionController::class,'index']);
 
     //trips
-    Route::get('trip',[TripController::class,'index'])->name('trip.index');
+    Route::get('trip',[TripController::class,'index']);
 
 });
