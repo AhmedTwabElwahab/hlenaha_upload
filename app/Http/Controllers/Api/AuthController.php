@@ -225,7 +225,7 @@ class AuthController extends BaseController
      * @param SocialLoginRequest $request
      * @return JsonResponse
      */
-    public function socialLogin(SocialLoginRequest $request)
+    public function socialLogin(SocialLoginRequest $request): JsonResponse
     {
         try
         {
@@ -256,11 +256,14 @@ class AuthController extends BaseController
                 code: 401
             );
         }
-
-
     }
 
 
+    /**
+     * @param $providerUser
+     * @param string $provider
+     * @return User
+     */
     protected function findOrCreate($providerUser, string $provider): User
     {
         $linkedSocialAccount = LinkedSocialAccount::query()->where('provider_name', $provider)

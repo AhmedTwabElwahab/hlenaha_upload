@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\TripController;
+use App\Http\Controllers\TripController;
 use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\DashboardController;
