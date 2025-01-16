@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
+use App\Models\driver;
 use App\Models\Message;
 use App\Notifications\activeUserNotification;
 use Illuminate\Http\Request;
@@ -10,12 +12,9 @@ class DashboardController extends Controller
 {
     public function index()
     {
-//        $user = auth()->user();
-//        $user->notify(new adminNotification($user));
+        $drivers_count = driver::all()->count();
+        $cars_count = car::all()->count();
 
-//        $notifications = auth()->user()->unreadNotifications;
-//        dd($notifications);
-
-        return view('dashboard.index');
+        return view('dashboard.index',compact('drivers_count','cars_count'));
     }
 }

@@ -11,16 +11,17 @@
                         <div class="card-header p-3 pt-2">
                             <div
                                 class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="material-icons opacity-10">weekend</i>
+                                <i class="material-icons opacity-10">groups</i>
                             </div>
                             <div class="text-start pt-1">
-                                <p class="text-sm mb-0 text-capitalize">أموال اليوم</p>
-                                <h4 class="mb-0">$53k</h4>
+                                <p class="text-sm mb-0 text-capitalize">{{__('global.drivers')}}</p>
+                                <h4 class="mb-0">{{$drivers_count}}</h4>
                             </div>
                         </div>
                         <hr class="dark horizontal my-0">
                         <div class="card-footer p-3">
-                            <p class="mb-0 text-start"><span class="text-success text-sm font-weight-bolder ms-1">+55%
+                            <p class="mb-0 text-start">
+                                <span class="text-success text-sm font-weight-bolder ms-1">+55%
                                 </span>من الأسبوع الماضي</p>
                         </div>
                     </div>
@@ -30,11 +31,11 @@
                         <div class="card-header p-3 pt-2">
                             <div
                                 class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="material-icons opacity-10">leaderboard</i>
+                                <i class="material-icons opacity-10">directions_car</i>
                             </div>
                             <div class="text-start pt-1">
-                                <p class="text-sm mb-0 text-capitalize">مستخدمو اليوم</p>
-                                <h4 class="mb-0">2,300</h4>
+                                <p class="text-sm mb-0 text-capitalize">{{__('global.cars')}}</p>
+                                <h4 class="mb-0">{{$cars_count}}</h4>
                             </div>
                         </div>
                         <hr class="dark horizontal my-0">
