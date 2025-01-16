@@ -2,7 +2,7 @@
     <x-navbars.sidebar activePage="dashboard"></x-navbars.sidebar>
 
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg overflow-x-hidden">
-        <x-navbars.navs.auth titlePage='dashboard'></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage='لوحة التحكم'></x-navbars.navs.auth>
 
         <div class="container-fluid py-4">
             <div class="row">

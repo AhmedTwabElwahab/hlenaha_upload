@@ -1,0 +1,46 @@
+.hlenaha_bk
+{
+    background-image: linear-gradient(195deg, #002f6cd9 0%, #002F6C 100%);
+}
+
+.sign_bk
+{
+    background-image: linear-gradient(195deg, #002f6cd9 0%, #002f6cd9 100%);
+}
+
+.shadow_hlenaha
+{
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(0, 47, 108, 0.4) !important;
+}
+
+
+.input-group.input-group-outline.is-focused .form-label + .form-control, .input-group.input-group-outline.is-filled .form-label + .form-control {
+    border-color: #28A745 !important;
+    border-top-color: transparent !important;
+    box-shadow: inset 1px 0 #28A745, inset -1px 0 #28A745, inset 0 -1px #28A745;
+}
+
+
+.input-group.input-group-outline.is-focused .form-label:before, .input-group.input-group-outline.is-focused .form-label:after, .input-group.input-group-outline.is-filled .form-label:before, .input-group.input-group-outline.is-filled .form-label:after {
+    border-top-color: #28A745;
+    box-shadow: inset 0 1px #28A745;
+}
+
+.input-group.input-group-outline.is-focused .form-label:before, .input-group.input-group-outline.is-focused .form-label:after, .input-group.input-group-outline.is-filled .form-label:before, .input-group.input-group-outline.is-filled .form-label:after {
+    border-top-color: #28A745;
+    box-shadow: inset 0 1px #28A745;
+}
+
+.input-group.input-group-outline.is-focused .form-label, .input-group.input-group-outline.is-filled .form-label {
+    color: #28A745;
+}
+
+.sidenav .navbar-brand
+{
+    padding: 0.5rem 1rem;
+}
+
+.navbar-vertical .navbar-brand > img, .navbar-vertical .navbar-brand-img {
+    max-width: 100%;
+    max-height: 4rem;
+}

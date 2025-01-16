@@ -7,6 +7,9 @@
         <div class="container-fluid px-2 px-md-4">
             <div class="page-header min-height-300 border-radius-xl mt-4"  style="background-image: linear-gradient(to left bottom, #002f6c, #00528f, #007392, #008f75, #28a745);">
                 <span class="mask opacity-6">
+                    <div class="" style="max-width: 11rem; margin: auto">
+                          <img src="{{asset('images/logo/logo.png')}}" alt="logo" style="width: 100%">
+                    </div>
                 </span>
             </div>
             <div class="card card-body mx-3 mx-md-4 mt-n6">
@@ -108,7 +111,6 @@
                             </div>
                             <button type="submit" class="btn bg-gradient-dark">{{__('cars/edit.add')}}</button>
                         </form>
-
                     </div>
                 </div>
             </div>
