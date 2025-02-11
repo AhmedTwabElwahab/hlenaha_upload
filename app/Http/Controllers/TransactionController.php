@@ -51,13 +51,19 @@ class TransactionController extends BaseController
         try
         {
             $Transaction = Transaction::createTransaction($request);
+
+            $amount = Transaction::where('driver_id',$Transaction->driver_id)->sum('amount');
+            $driver = driver::find($Transaction->driver_id);
+            $driver->balance = $amount;
+            $driver->update();
+
             DB::commit();
             return redirect()->route('transaction.index')->withStatus(__('global.create_success'));
         } catch (Exception $e)
         {
             DB::rollBack();
             $message = $this->handleException($e);
-            return $this->failed($message);
+            return redirect()->back()->withErrors([$message]);
         }
     }
 
@@ -89,13 +95,20 @@ class TransactionController extends BaseController
             {
                 throw new Exception('update_error');
             }
+
+            $amount = Transaction::where('driver_id',$transaction->driver_id)->sum('amount');
+
+            $driver = driver::find($transaction->driver_id);
+            $driver->balance = $amount;
+            $driver->update();
+
             DB::commit();
             return redirect()->route('transaction.index')->withStatus(__('global.update_success'));
         } catch (Exception $e)
         {
             DB::rollBack();
             $message = $this->handleException($e);
-            return $this->failed($message);
+             return redirect()->back()->withErrors([$message]);
         }
     }
 
@@ -112,13 +125,20 @@ class TransactionController extends BaseController
             {
                 throw new Exception('delete_error');
             }
+
+            $amount = Transaction::where('driver_id',$transaction->driver_id)->sum('amount');
+
+            $driver = driver::find($transaction->driver_id);
+            $driver->balance = $amount;
+            $driver->update();
+
             DB::commit();
             return redirect()->route('transaction.index')->withStatus(__('global.success_delete'));
         } catch (Exception $e)
         {
             DB::rollBack();
             $message = $this->handleException($e);
-            return $this->failed($message);
+             return redirect()->back()->withErrors([$message]);
         }
     }
 }

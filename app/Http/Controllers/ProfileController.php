@@ -48,7 +48,7 @@ class ProfileController extends Controller
         {
             DB::rollBack();
             $message = $this->handleException($e);
-            return $this->failed($message);
+            return redirect()->back()->withErrors([$message]);
         }
     }
 
@@ -73,7 +73,7 @@ class ProfileController extends Controller
         {
             DB::rollBack();
             $message = $this->handleException($e);
-            return $this->failed($message);
+            return redirect()->back()->withErrors([$message]);
         }
 
     }

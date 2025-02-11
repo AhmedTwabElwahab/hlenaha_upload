@@ -78,6 +78,15 @@ class BankAccountController extends BaseController
             $bankAccount->is_default       = !($request->input('is_default') == null);
             $bankAccount->updated_at       = Carbon::now();
 
+            if($request->input('is_default'))
+            {
+                $Accounts = bankAccount::where('user_id', $bankAccount->user_id)->get();
+                foreach($Accounts as $Account)
+                {
+                    $Account->is_default = false;
+                    $Account->update();
+                }
+            }
 
             if (!$bankAccount->update())
             {

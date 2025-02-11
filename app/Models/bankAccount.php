@@ -57,6 +57,15 @@ class bankAccount extends Model
         $Bank_account->disc                     = $request->input('disc');
         $Bank_account->is_default               = $request->input('is_default') ?? false;
 
+        if($request->input('is_default'))
+        {
+            $Accounts = self::where('user_id',$Bank_account->user_id)->get();
+            foreach($Accounts as $Account)
+            {
+                $Account->is_default = false;
+                $Account->update();
+            }
+        }
 
         if (!$Bank_account->save())
         {
