@@ -16,7 +16,7 @@ class DriverController extends BaseController
      */
     public function index(): JsonResponse
     {
-        $drivers = Driver::all();
+        $drivers = driver::all();
         return $this->sendResponse($drivers, 'All drivers have arrived.');
     }
 
@@ -30,7 +30,7 @@ class DriverController extends BaseController
         DB::beginTransaction();
         try
         {
-            $driver = Driver::createDriver($request);
+            $driver = driver::createDriver($request);
             DB::commit();
             return $this->sendResponse($driver,'success_add');
         } catch (Exception $e)
@@ -43,7 +43,7 @@ class DriverController extends BaseController
 
     /**
      * Display information for a specific Driver.
-     * @param Driver $driver
+     * @param driver $driver
      * @return JsonResponse
      */
     public function show(driver $driver): JsonResponse
@@ -54,7 +54,7 @@ class DriverController extends BaseController
     /**
      * Update the Driver information.
      * @param DriverRequest $request
-     * @param Driver $driver
+     * @param driver $driver
      * @return JsonResponse
      */
     public function update(DriverRequest $request, driver $driver): JsonResponse
@@ -75,7 +75,7 @@ class DriverController extends BaseController
 
     /**
      * Remove the specified resource from storage.
-     * @param Driver $driver
+     * @param driver $driver
      * @return JsonResponse
      */
     public function destroy(driver $driver): JsonResponse

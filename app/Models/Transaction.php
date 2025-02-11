@@ -83,6 +83,6 @@ class Transaction extends Model
 
     public function driver(): HasOne
     {
-        return $this->hasOne(Driver::class,'id','driver_id');
+        return $this->hasOne(driver::class,'id','driver_id');
     }
 }
