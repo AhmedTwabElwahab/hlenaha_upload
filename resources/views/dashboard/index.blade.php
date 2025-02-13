@@ -21,8 +21,8 @@
                         <hr class="dark horizontal my-0">
                         <div class="card-footer p-3">
                             <p class="mb-0 text-start">
-                                <span class="text-success text-sm font-weight-bolder ms-1">+55%
-                                </span>من الأسبوع الماضي</p>
+                                <span class="text-success text-sm font-weight-bolder ms-1">{{$driver_present}}%
+                                </span>من الشهر الماضي</p>
                         </div>
                     </div>
                 </div>
@@ -40,8 +40,8 @@
                         </div>
                         <hr class="dark horizontal my-0">
                         <div class="card-footer p-3">
-                            <p class="mb-0 text-start"><span class="text-success text-sm font-weight-bolder ms-1">+33%
-                                </span>من الأسبوع الماضي</p>
+                            <p class="mb-0 text-start"><span class="text-success text-sm font-weight-bolder ms-1">{{$car_present}}%
+                                </span>من الشهر الماضي</p>
                         </div>
                     </div>
                 </div>
@@ -50,19 +50,19 @@
                         <div class="card-header p-3 pt-2">
                             <div
                                 class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="material-icons opacity-10">store</i>
+                                <i class="material-icons-round opacity-10">mode_of_travel</i>
                             </div>
                             <div class="text-start pt-1">
-                                <p class="text-sm mb-0 text-capitalize">عملاء جدد</p>
+                                <p class="text-sm mb-0 text-capitalize">إجمالي الرحلات</p>
                                 <h4 class="mb-0">
-                                    <span class="text-danger text-sm font-weight-bolder ms-1">-2%</span>
-                                    +3,462
+{{--                                    <span class="text-danger text-sm font-weight-bolder ms-1">-2%</span>--}}
+                                    {{$trips_count}}
                                 </h4>
                             </div>
                         </div>
                         <hr class="dark horizontal my-0">
                         <div class="card-footer p-3">
-                            <p class="mb-0 text-start"><span class="text-success text-sm font-weight-bolder ms-1">+5%
+                            <p class="mb-0 text-start"><span class="text-success text-sm font-weight-bolder ms-1">{{$trips_present}}%
                                 </span>من الشهر الماضي</p>
                         </div>
                     </div>
@@ -72,17 +72,18 @@
                         <div class="card-header p-3 pt-2">
                             <div
                                 class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="material-icons opacity-10">person_add</i>
+                                <i class="material-icons opacity-10">cached</i>
                             </div>
                             <div class="text-start pt-1">
-                                <p class="text-sm mb-0 text-capitalize">مبيعات</p>
-                                <h4 class="mb-0">$103,430</h4>
+                                <p class="text-sm mb-0 text-capitalize">التحويلات</p>
+                                <h4 class="mb-0">{{$transactions_count}}</h4>
                             </div>
                         </div>
                         <hr class="dark horizontal my-0">
                         <div class="card-footer p-3">
-                            <p class="mb-0 text-start"><span class="text-success text-sm font-weight-bolder ms-1">+7%
-                                </span>مقارنة بيوم أمس</p>
+                            <p class="mb-0 text-start">
+                                <span class="text-success text-sm font-weight-bolder ms-1">{{$transactions_present}}%
+                                </span>مقارنة بالشهر الماضي</p>
                         </div>
                     </div>
                 </div>

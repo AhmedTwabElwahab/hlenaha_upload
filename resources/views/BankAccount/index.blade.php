@@ -50,8 +50,9 @@
                                         </span>
                                     </div>
                                     <div class="me-auto text-end">
-
-                                        @if($account->is_default) <i class="material-icons text-sm ms-2">stars</i> @endif
+                                        <div class="text-dark px-3 mb-0 d-flex justify-content-center">
+                                            @if($account->is_default) <i class="material-icons text-sm ms-2">stars</i> @endif
+                                        </div>
                                         <form method="POST" id="DELETE_Bank_FORM_{{$account -> id}}" action="{{ route('bank_account.destroy', $account -> id) }}">
                                             @csrf
                                             <input type="hidden" name="_method" value="DELETE">
