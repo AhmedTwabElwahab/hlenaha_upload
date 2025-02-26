@@ -95,7 +95,10 @@
                                             <p class="text-xs text-secondary mb-0">{{$transaction->bankAccount->account_number}}</p>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">{{$transaction->amount}}</span>
+                                            <span class="text-secondary text-xs font-weight-bold">
+                                                {{$transaction->amount}}
+                                                <x-currency></x-currency>
+                                            </span>
                                         </td>
                                         <td class="align-middle text-center">
                                             <span class="text-secondary text-xs font-weight-bold">{{$transaction->date}}</span>

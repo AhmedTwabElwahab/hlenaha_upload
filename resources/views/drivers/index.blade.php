@@ -112,7 +112,10 @@
                                                     @endif
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{$driver->balance}}</span>
+                                                    <span class="text-secondary text-xs font-weight-bold">
+                                                        {{$driver->balance}}
+                                                        <x-currency></x-currency>
+                                                    </span>
                                                 </td>
                                                 <td class="align-middle">
                                                     <a href="{{route('driver.edit',$driver->id)}}"
