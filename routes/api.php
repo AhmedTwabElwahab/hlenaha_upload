@@ -3,6 +3,7 @@
 use App\Http\Api\Controllers\BannersController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BankAccountController;
+use App\Http\Controllers\Api\bankAccountNameController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\notificationController;
 use App\Http\Controllers\Api\ProfileController;
@@ -74,5 +75,8 @@ Route::group(['middleware' => ['auth:sanctum']],function ()
 
     //Banners
     Route::get('banners',[BannersController::class,'index'])->name('Banners.index');
+
+    //bankAccountName
+    Route::get('bankAccountName',[bankAccountNameController::class,'index']);
 
 });
