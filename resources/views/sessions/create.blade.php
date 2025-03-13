@@ -14,6 +14,19 @@
                                             <img src="{{asset('images/logo/logo.png')}}" alt="logo" style="width: 100%">
                                         </div>
                                         <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">{{__('global.sign_in')}}</h4>
+
+{{--                                        <div>--}}
+{{--                                            <a class="btn mt-3 shadow-lg bg-white rounded"  onClick="socialSignin('google');">--}}
+{{--                                                <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />--}}
+{{--                                                <span class="fa fa-google"></span> Sign in with Google--}}
+{{--                                            </a>--}}
+{{--                                            <form id="social-login-form" action="" method="POST" style="display: none;">--}}
+{{--                                                @csrf--}}
+{{--                                                <input id="social-login-access-token" name="social-login-access-token" type="text">--}}
+{{--                                                <input id="social-login-tokenId" name="access_token" type="text">--}}
+{{--                                                <input  name="provider"  value="google" type="text">--}}
+{{--                                            </form>--}}
+{{--                                        </div>--}}
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -76,5 +89,49 @@
     }
 });
 </script>
+
+{{--        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>--}}
+{{--        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>--}}
+{{--        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>--}}
+{{--        <script>--}}
+{{--            // Initialize Firebase--}}
+{{--            var config = {--}}
+{{--                apiKey: "AIzaSyCLsG0vgLEKkX2aCARvJGK-x9iHA_mAeyQ",--}}
+{{--                authDomain: "halinaha-7041e.firebaseapp.com",--}}
+{{--                projectId: "halinaha-7041e",--}}
+{{--                storageBucket: "halinaha-7041e.firebasestorage.app",--}}
+{{--                messagingSenderId: "652170422777",--}}
+{{--                appId: "1:652170422777:web:0b53be3115afb99a2f7528",--}}
+{{--                measurementId: "G-H9WXD313W3"--}}
+{{--            };--}}
+{{--            firebase.initializeApp(config);--}}
+{{--            var facebookProvider = new firebase.auth.FacebookAuthProvider();--}}
+{{--            var googleProvider = new firebase.auth.GoogleAuthProvider();--}}
+{{--            var facebookCallbackLink = '/api/socialLogin';--}}
+{{--            var googleCallbackLink = '/api/socialLogin';--}}
+{{--            async function socialSignin(provider) {--}}
+{{--                var socialProvider = null;--}}
+{{--                if (provider === "facebook") {--}}
+{{--                    socialProvider = facebookProvider;--}}
+{{--                    document.getElementById('social-login-form').action = facebookCallbackLink;--}}
+{{--                } else if (provider === "google") {--}}
+{{--                    socialProvider = googleProvider;--}}
+{{--                    document.getElementById('social-login-form').action = googleCallbackLink;--}}
+{{--                } else {--}}
+{{--                    return;--}}
+{{--                }--}}
+{{--                firebase.auth().signInWithPopup(socialProvider).then(function(result) {--}}
+{{--                    result.user.getIdToken().then(function(result) {--}}
+{{--                        document.getElementById('social-login-tokenId').value = result;--}}
+{{--                        document.getElementById('social-login-form').submit();--}}
+{{--                    });--}}
+{{--                }).catch(function(error) {--}}
+{{--                    // do error handling--}}
+{{--                    console.log(error);--}}
+{{--                });--}}
+{{--            }--}}
+{{--        </script>--}}
+
+
 @endpush
 </x-layout>

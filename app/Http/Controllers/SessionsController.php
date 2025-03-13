@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\classes\FirebaseServices;
+use App\Models\Notifications;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Kreait\Firebase\Contract\Auth as FirebaseAuth;
 Use Str;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Validation\ValidationException;

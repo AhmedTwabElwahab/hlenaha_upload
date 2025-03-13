@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PushNotificationController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\CarController;
@@ -88,3 +89,4 @@ Route::group(['middleware' => ['auth',CheckAdmin::class]], function ()
 
 });
 
+Route::get('/send-notification', [PushNotificationController::class, 'sendPushNotification']);

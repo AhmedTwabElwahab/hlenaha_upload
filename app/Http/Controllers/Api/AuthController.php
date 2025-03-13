@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helper\classes\FirebaseServices;
 use App\Http\Requests\Api\activeCodeRequest;
 use App\Http\Requests\Api\RegisterRequest;
 use App\Http\Requests\Api\SocialLoginRequest;
@@ -10,6 +11,7 @@ use App\Http\Requests\Api\Users\UserExistRequest;
 use App\Http\Requests\Api\Users\UserRestPasswordRequest;
 use App\Models\driver;
 use App\Models\LinkedSocialAccount;
+use App\Models\Notifications;
 use App\Models\User;
 use App\Notifications\activeUserNotification;
 use Exception;
@@ -21,11 +23,21 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use Kreait\Firebase\Contract\Auth as FirebaseAuth;
 use Laravel\Socialite\Facades\Socialite;
 
 
 class AuthController extends BaseController
 {
+    protected FirebaseAuth $auth;
+    protected $FirebaseServices;
+
+    public function __construct(FirebaseAuth $auth,FirebaseServices $firebase)
+    {
+        $this->auth = $auth;
+        $this->FirebaseServices = $firebase;
+    }
+
     public function index(Request $request): JsonResponse
     {
         return $this->failed('Unauthorised');
@@ -47,6 +59,17 @@ class AuthController extends BaseController
             'password' => $request->input('password')
         ]))
         {
+            $signInResult = $this->auth->signInWithEmailAndPassword($request['email'], $request['password']);
+
+            $user = User::where('id',auth()->id())->firstOrFail();
+            $user->fcm_token  = $signInResult->data()["idToken"];
+            $user->uuid  = $signInResult->data()["localId"];
+            $user->update();
+
+            $this->FirebaseServices->sendNotificationToUser($user->fcm_token, 'hello ->'.$user->name, "successful login my dear");
+            //create notification on database
+            Notifications::CreateNotification($user->uuid,'hello ->'.$user->name, "successful login my dear",false);
+
             $success['token'] = Auth::user()->createToken('MY_TOKEN_API')->plainTextToken;
             return $this->sendResponse($success, 'User login successfully.');
         } else {
@@ -63,19 +86,30 @@ class AuthController extends BaseController
     public function register(RegisterRequest $request): JsonResponse
     {
         DB::beginTransaction();
-        try
-        {
+        try {
             $user = User::CreateUser($request);
+            $FirebaseUser = $this->auth->createUser(
+                [
+                    'email'         => $request->input('email'),
+                    'emailVerified' => false,
+                    'password'      => $request->input('password'),
+                    'displayName'   => $request->input('name'),
+                    'disabled'      => false,
+                ]
+            );
+
+            $user->uuid = $FirebaseUser->uid;
+            $user->save();
+
             if ($user)
             {
-                Driver::createDriver($request,$user->id);
+                Driver::createDriver($request, $user->id);
 
-                $user->notify(new activeUserNotification($user,$user->active_code));
+                $user->notify(new activeUserNotification($user, $user->active_code));
                 DB::commit();
             }
-            return $this->success( 'User registered successfully.');
-        } catch (Exception $e)
-        {
+            return $this->success('User registered successfully.');
+        } catch (Exception $e) {
             DB::rollBack();
             $message = $this->handleException($e);
             return $this->failed($message);
@@ -90,19 +124,17 @@ class AuthController extends BaseController
     public function active_account(activeCodeRequest $request): JsonResponse
     {
         $success = [];
-        $user = User::where('email',$request->input('email'))
-            ->where('active_code',$request->input('code'))->first();
+        $user = User::where('email', $request->input('email'))
+            ->where('active_code', $request->input('code'))->first();
 
-        if (!empty($user))
-        {
-            if (Auth::loginUsingId($user->id))
-            {
+        if (!empty($user)) {
+            if (Auth::loginUsingId($user->id)) {
                 $success['token'] = Auth::user()->createToken('MY_TOKEN_API')->plainTextToken;
                 $user->email_verified_at = now();
                 $user->active_code = null;
                 $user->save();
             }
-            return $this->sendResponse($success,'successfully.');
+            return $this->sendResponse($success, 'successfully.');
         }
         return $this->failed('Invalid code');
     }
@@ -116,8 +148,7 @@ class AuthController extends BaseController
      */
     public function logout(Request $request): JsonResponse
     {
-        if(auth()->check())
-        {
+        if (auth()->check()) {
             $request->user()->tokens()->delete();
             return response()->json(['message' => 'Logged out successfully']);
         }
@@ -154,7 +185,7 @@ class AuthController extends BaseController
      */
     public function forgetPassword(UserExistRequest $request): JsonResponse
     {
-        $user = User::where('email',$request->input('email'))->first();
+        $user = User::where('email', $request->input('email'))->first();
 //        $status = Password::sendResetLink(
 //            $request->only('email')
 //        );
@@ -162,10 +193,10 @@ class AuthController extends BaseController
 //        {
 //            return response()->json(['message' => 'Unable to send reset link.'], 500);
 //        }
-        $user->active_code      = random_int(100000, 999999);
+        $user->active_code = random_int(100000, 999999);
         $user->save();
 
-        $user->notify(new activeUserNotification($user,$user->active_code));
+        $user->notify(new activeUserNotification($user, $user->active_code));
         return response()->json(['message' => 'Reset link sent to your email.']);
     }
 
@@ -179,14 +210,12 @@ class AuthController extends BaseController
         $email = $request->input('email');
         $password = $request->input('password');
 
-        $user = User::where('email',$email)->where('active_code',$code)->first();
-        if (!empty($user))
-        {
+        $user = User::where('email', $email)->where('active_code', $code)->first();
+        if (!empty($user)) {
             $user->password = Hash::make($password);
             $user->active_code = null;
             $user->save();
-        }else
-        {
+        } else {
             return $this->failed('Invalid code');
         }
         return $this->success('success update');
@@ -202,8 +231,7 @@ class AuthController extends BaseController
     {
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password)
-            {
+            function ($user, $password) {
                 $user->forceFill([
                     'password' => ($password)
                 ])->setRememberToken(Str::random(60));
@@ -213,85 +241,85 @@ class AuthController extends BaseController
                 event(new PasswordReset($user));
             }
         );
-        if ($status != Password::PASSWORD_RESET)
-        {
+        if ($status != Password::PASSWORD_RESET) {
             return response()->json(['message' => 'Unable to reset password.'], 500);
         }
         return response()->json(['message' => 'Password reset successfully.']);
     }
 
 
-    /**
-     * @param SocialLoginRequest $request
-     * @return JsonResponse
-     */
-    public function socialLogin(SocialLoginRequest $request)
-    {
-        try
-        {
-            $accessToken  = $request->get('access_token');
-            $provider     = $request->get('provider');
-            $providerUser = Socialite::driver($provider)->userFromToken($accessToken);
+//    /**
+//     * @param SocialLoginRequest $request
+//     * @return JsonResponse
+//     */
+//    public function socialLogin(SocialLoginRequest $request)
+//    {
+//        try
+//        {
+//            $accessToken  = $request->get('access_token');
+//            $provider     = $request->get('provider');
+//            $providerUser = Socialite::driver($provider)->userFromToken($accessToken);
+//
+//        } catch (Exception $exception) {
+//            return response()->json([
+//                'message' => $exception->getMessage(),
+//            ]);
+//        }
+//
+//        if (filled($providerUser)) {
+//            $user = $this->findOrCreate($providerUser, $provider);
+//        } else {
+//            $user = $providerUser;
+//        }
+//        auth()->login($user);
+//        if (auth()->check()) {
+//            return response()->json([
+//                'message' => 'Logged in successfully',
+//                'data' => ['token' => auth()->user()->createToken('API Token')->plainTextToken],
+//            ]);
+//        } else {
+//            return $this->error(
+//                message: 'Failed to Login try again',
+//                code: 401
+//            );
+//        }
+//
+//
+//    }
+//
+//
+//    protected function findOrCreate($providerUser, string $provider): User
+//    {
+//        $linkedSocialAccount = LinkedSocialAccount::query()->where('provider_name', $provider)
+//            ->where('provider_id', $providerUser->getId())
+//            ->first();
+//
+//        if ($linkedSocialAccount) {
+//            return $linkedSocialAccount->user;
+//        } else {
+//            $user = null;
+//
+//            if ($email = $providerUser->getEmail())
+//            {
+//                $user = User::query()->where('email', $email)->first();
+//            }
+//
+//            if (! $user)
+//            {
+//                $user = User::query()->create([
+//                    'name' => $providerUser->getName(),
+//                    'email' => $providerUser->getEmail(),
+//                ]);
+//                $user->markEmailAsVerified();
+//            }
+//
+//            $user->linkedSocialAccounts()->create([
+//                'provider_id' => $providerUser->getId(),
+//                'provider_name' => $provider,
+//            ]);
+//
+//            return $user;
+//        }
+//    }
 
-        } catch (Exception $exception) {
-            return response()->json([
-                'message' => $exception->getMessage(),
-            ]);
-        }
-
-        if (filled($providerUser)) {
-            $user = $this->findOrCreate($providerUser, $provider);
-        } else {
-            $user = $providerUser;
-        }
-        auth()->login($user);
-        if (auth()->check()) {
-            return response()->json([
-                'message' => 'Logged in successfully',
-                'data' => ['token' => auth()->user()->createToken('API Token')->plainTextToken],
-            ]);
-        } else {
-            return $this->error(
-                message: 'Failed to Login try again',
-                code: 401
-            );
-        }
-
-
-    }
-
-
-    protected function findOrCreate($providerUser, string $provider): User
-    {
-        $linkedSocialAccount = LinkedSocialAccount::query()->where('provider_name', $provider)
-            ->where('provider_id', $providerUser->getId())
-            ->first();
-
-        if ($linkedSocialAccount) {
-            return $linkedSocialAccount->user;
-        } else {
-            $user = null;
-
-            if ($email = $providerUser->getEmail())
-            {
-                $user = User::query()->where('email', $email)->first();
-            }
-
-            if (! $user)
-            {
-                $user = User::query()->create([
-                    'name' => $providerUser->getName(),
-                    'email' => $providerUser->getEmail(),
-                ]);
-                $user->markEmailAsVerified();
-            }
-
-            $user->linkedSocialAccounts()->create([
-                'provider_id' => $providerUser->getId(),
-                'provider_name' => $provider,
-            ]);
-
-            return $user;
-        }
-    }
 }

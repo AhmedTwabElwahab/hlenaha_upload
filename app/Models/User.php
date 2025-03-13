@@ -22,8 +22,11 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string  $email
  * @property string  $password
  * @property string  $role
+ * @property string  $fcm_token
+ * @property string  $uuid
  * @property string  $birth_date
  * @property string  $updated_at
+ * @property string  $active_code
  *
  * RELATIONS PROPERTIES
  *
@@ -58,6 +61,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
         'role',
         'api_token',
+        'fcm_token',
+        'uuid',
     ];
 
     /**

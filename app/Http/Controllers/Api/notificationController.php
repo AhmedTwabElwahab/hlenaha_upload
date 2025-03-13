@@ -3,25 +3,54 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Notifications;
 use Illuminate\Http\Request;
 
 class notificationController extends BaseController
 {
-    public function index()
+
+
+    public function getNotifications(Request $request)
     {
-        $notifications = auth()->user()->notifications;
+        if (!$request->has('uid'))
+        {
+            return $this->failed('uid is required.');
+        }
+
+        $uid = $request->input('uid');
+        $notifications = Notifications::where('uid', $uid)->get();
         return $this->sendResponse($notifications->toArray(),'Notifications retrieved successfully.');
     }
 
-    public function unreadNotifications()
+
+    public function unreadNotifications(Request $request)
     {
-        $notifications = auth()->user()->unreadNotifications;
+        if (!$request->has('uid'))
+        {
+            return $this->failed('uid is required.');
+        }
+
+        $uid = $request->input('uid');
+        $notifications = Notifications::where('uid', $uid)->where('read', false)->get();
         return $this->sendResponse($notifications->toArray(),'Notifications retrieved successfully.');
     }
-
     public function read(Request $request)
     {
-        auth()->user()->notifications->markAsRead();
-        return $this->sendResponse('Notifications read successfully.');
+        if (!$request->has('uid'))
+        {
+            return $this->failed('uid is required.');
+        }
+
+        $uid = $request->input('uid');
+        $notifications = Notifications::where('uid', $uid)->where('read', false)->get();
+
+        foreach ($notifications as $notification)
+        {
+            $notification->read = true;
+            $notification->read_at = now();
+            $notification->save();
+        }
+
+        return $this->success('Notifications read successfully.');
     }
 }

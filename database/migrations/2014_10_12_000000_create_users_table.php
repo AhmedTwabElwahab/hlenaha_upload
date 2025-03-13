@@ -25,6 +25,8 @@ class CreateUsersTable extends Migration
             $table->string('api_token')->nullable();
             $table->string('role')->default(USER_ROLE);
             $table->unsignedInteger('active_code')->default(0)->nullable();
+            $table->text('fcm_token')->nullable();
+            $table->string('uuid')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
