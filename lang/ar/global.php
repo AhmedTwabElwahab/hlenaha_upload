@@ -5,6 +5,8 @@ return [
     'logout'                 => 'تسجيل الخروج',
     'dashboard'              => 'لوحات التحكم',
     'drivers'                => 'السائقين',
+    'Banners'                => 'إعلانات',
+    'Banner'                 => 'إعلان',
     'cars'                   => 'السيارات',
     'notifications'          => 'إشعارات',
     'personalInfo'           => 'حسابي',

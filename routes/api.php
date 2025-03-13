@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Api\Controllers\BannersController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BankAccountController;
 use App\Http\Controllers\Api\MessageController;
@@ -11,7 +12,6 @@ use App\Http\Controllers\Api\SocialLoginController;
 use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Api\TripController;
 use App\Http\Controllers\Api\VerificationApiController;
-use App\Models\Notifications;
 use Illuminate\Support\Facades\Route;
 
 
@@ -71,5 +71,8 @@ Route::group(['middleware' => ['auth:sanctum']],function ()
 
     //trips
     Route::get('trip',[TripController::class,'index']);
+
+    //Banners
+    Route::get('banners',[BannersController::class,'index'])->name('Banners.index');
 
 });
