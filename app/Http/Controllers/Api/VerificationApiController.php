@@ -59,6 +59,7 @@ class VerificationApiController extends BaseController
             $date = date("Y-m-d g:i:s");
 
             $user->email_verified_at = $date;
+            $user->active_code = null;
 
             $user->save();
 
