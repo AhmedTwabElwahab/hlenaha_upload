@@ -11,7 +11,7 @@ class BankAccountRequest extends FormRequest
         'bank_account_name_id'      => 'required|numeric|exists:bank_account_names,id',
         'user_id'                   => 'sometimes|nullable|numeric|exists:users,id',
         'account_number'            => 'required|numeric',
-        'iban'                      => 'required|numeric',
+        'iban'                      => 'required|string',
         'disc'                      => 'sometimes|nullable|string',
         'is_default'                => 'sometimes|nullable|numeric',
     ];

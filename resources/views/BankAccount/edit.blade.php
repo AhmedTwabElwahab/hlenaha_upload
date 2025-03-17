@@ -52,7 +52,7 @@
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label">{{__('bank/index.iban')}}</label>
-                                    <input type="number" name="iban" class="form-control border border-2 p-2" value='{{ old('iban',$account->iban) }}'>
+                                    <input type="text" name="iban" class="form-control border border-2 p-2" value='{{ old('iban',$account->iban) }}'>
                                     @error('iban')
                                         <p class='text-danger inputerror'>{{ $message }} </p>
                                     @enderror

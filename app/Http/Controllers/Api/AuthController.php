@@ -71,6 +71,7 @@ class AuthController extends BaseController
                 Driver::createDriver($request,$user->id);
 
                 $user->notify(new activeUserNotification($user,$user->active_code));
+                $user->sendEmailVerificationNotification();
                 DB::commit();
             }
             return $this->success( 'User registered successfully.');
