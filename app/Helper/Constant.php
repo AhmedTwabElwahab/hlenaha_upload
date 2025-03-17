@@ -13,6 +13,7 @@ const APP_ERROR                      = -1;
 const ADMIN_ROLE                     = "ADMIN_ROLE";
 const USER_ROLE                      = "ROLE_USER";
 const DRIVER_IMAGES_FOLDER           = 'images' . DS . 'drivers' ;
+const BANNERS_IMAGES_FOLDER           = 'images' . DS . 'banner' ;
 const DEFUlAT_USER_IMAGE             = 'images' . DS . 'drivers'.DS."person.svg" ;
 
 /**

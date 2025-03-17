@@ -78,6 +78,14 @@
                     <span class="nav-link-text me-1">{{__('global.messages')}}</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link {{ $activePage == 'Banners' ? 'active bg-gradient-success' : '' }}" href="{{ route('Banners.index') }}">
+                    <div class="text-white text-center ms-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">web_stories</i>
+                    </div>
+                    <span class="nav-link-text me-1">{{__('global.Banners')}}</span>
+                </a>
+            </li>
 
         </ul>
     </div>

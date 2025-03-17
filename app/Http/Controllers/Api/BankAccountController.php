@@ -36,7 +36,7 @@ class BankAccountController extends BaseController
             $Bank_account = BankAccount::createBankAccount($request);
             DB::commit();
             $user = auth()->user();
-            $user->notify(new SendNotification('create succes'));
+            $user->notify(new SendNotification('Bank account added successfully'));
             return $this->sendResponse($Bank_account,'success_add');
         } catch (Exception $e)
         {

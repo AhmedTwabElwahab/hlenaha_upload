@@ -26,10 +26,11 @@ class DashboardController extends Controller
         $trips_count_last_month         = trip::query()
             ->whereDate('created_at', [now(), now()->subMonth()])->count();
 
-        $driver_present         = format_number($drivers_count_last_month / $drivers_count  * 100);
-        $car_present            = format_number($cars_count_last_month / $cars_count  * 100);
-        $transactions_present   = format_number($transactions_count_last_month / $transactions_count  * 100);
-        $trips_present          = format_number($trips_count_last_month / $trips_count  * 100);
+        $drivers_count !== 0 ?       $driver_present  = format_number($drivers_count_last_month / $drivers_count  * 100) : $driver_present  =  0;
+        $cars_count !== 0 ?          $car_present            = format_number($cars_count_last_month / $cars_count  * 100) : $car_present            = 0;
+        $transactions_count !== 0 ?  $transactions_present   = format_number($transactions_count_last_month / $transactions_count  * 100) : $transactions_present   = 0;
+        $trips_count !== 0 ?         $trips_present          = format_number($trips_count_last_month / $trips_count  * 100) :  $trips_present          = 0;
+
 
         $args = [
             'trips_count',

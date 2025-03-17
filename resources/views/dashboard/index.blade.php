@@ -831,5 +831,57 @@
             });
 
         </script>
+
+
+{{--        <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>--}}
+{{--        <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-messaging.js"></script>--}}
+{{--        <script>--}}
+{{--            const firebaseConfig = {--}}
+{{--                apiKey: "AIzaSyCLsG0vgLEKkX2aCARvJGK-x9iHA_mAeyQ",--}}
+{{--                authDomain: "halinaha-7041e.firebaseapp.com",--}}
+{{--                projectId: "halinaha-7041e",--}}
+{{--                storageBucket: "halinaha-7041e.firebasestorage.app",--}}
+{{--                messagingSenderId: "652170422777",--}}
+{{--                appId: "1:652170422777:web:0b53be3115afb99a2f7528",--}}
+{{--                measurementId: "G-H9WXD313W3"--}}
+{{--            };--}}
+
+{{--            firebase.initializeApp(firebaseConfig);--}}
+{{--            const messaging = firebase.messaging();--}}
+
+{{--            // طلب الإذن للإشعارات--}}
+{{--            function requestNotificationPermission() {--}}
+{{--                Notification.requestPermission().then((permission) => {--}}
+{{--                    if (permission === "granted")--}}
+{{--                    {--}}
+{{--                        console.log('accept');--}}
+{{--                    }--}}
+{{--                });--}}
+{{--            }--}}
+{{--            requestNotificationPermission();--}}
+
+{{--            // استقبال الإشعارات عند تشغيل الموقع--}}
+{{--            messaging.onMessage((payload) => {--}}
+{{--                console.log("New notification:", payload);--}}
+{{--                alert(payload.notification.title + ": " + payload.notification.body);--}}
+{{--            });--}}
+{{--        </script>--}}
+
+{{--        <script>--}}
+{{--            function fetchNotifications() {--}}
+{{--                fetch("http://localhost:8080/api/get-notifications/f0Qt5YCKs3XkpKPIwKjhFDT2Ac62")--}}
+{{--                    .then(response => response.json())--}}
+{{--                    .then(data => {--}}
+{{--                        if (data.length > 0) {--}}
+{{--                            alert("New Notifications: " + data.map(n => n.title).join(", "));--}}
+{{--                        }--}}
+{{--                    })--}}
+{{--                    .catch(error => console.error("Error fetching notifications:", error));--}}
+{{--            }--}}
+
+{{--            // استدعاء الدالة كل 30 ثانية--}}
+{{--            setInterval(fetchNotifications, 30000);--}}
+{{--        </script>--}}
+
     @endpush
 </x-app>

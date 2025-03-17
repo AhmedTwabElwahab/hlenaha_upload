@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BannersController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\CarController;
@@ -85,6 +86,14 @@ Route::group(['middleware' => ['auth',CheckAdmin::class]], function ()
 //    Route::put('/users/{User}',[UserController::class,'update']);
 //    Route::get('/users/{User}',[UserController::class,'show']);
 //    Route::delete('/users/{User}',[UserController::class,'destroy']);
+
+    //Banners
+    Route::get('banners',[BannersController::class,'index'])->name('Banners.index');
+    Route::get('banners/create',[BannersController::class,'create'])->name('Banners.create');
+    Route::get('banners/{banner}/edit',[BannersController::class,'edit'])->name('Banners.edit');
+    Route::post('banners',[BannersController::class,'store'])->name('Banners.store');
+    Route::put('banners{banner}',[BannersController::class,'update'])->name('Banners.update');
+    Route::delete('banners/{banner}',[BannersController::class,'destroy'])->name('Banners.destroy');
 
 });
 
