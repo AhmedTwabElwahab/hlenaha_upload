@@ -28,7 +28,7 @@ Route::controller(AuthController::class)->group(function ()
     Route::post('socialLogin','socialLogin')->middleware('guest')->name('socialLogin');
 });
 
-//Route::get('/email/verify/{id}/{hash}',[VerificationApiController::class,'verify'])->name('verification.verify');
+Route::get('/email/verify/{id}/{hash}',[VerificationApiController::class,'verify'])->name('verification.verify');
 
 
 Route::group(['middleware' => ['auth:sanctum']],function ()
