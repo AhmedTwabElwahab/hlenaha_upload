@@ -12,6 +12,7 @@ use App\Models\driver;
 use App\Models\LinkedSocialAccount;
 use App\Models\User;
 use App\Notifications\activeUserNotification;
+use App\Notifications\SendNotification;
 use Exception;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\JsonResponse;
@@ -48,6 +49,11 @@ class AuthController extends BaseController
         ]))
         {
             $success['token'] = Auth::user()->createToken('MY_TOKEN_API')->plainTextToken;
+
+            if (Auth::user()->email_verified_at === null)
+            {
+                Auth::user()->notify(new SendNotification('active your email', route('verificationapi.verify')));
+            }
             return $this->sendResponse($success, 'User login successfully.');
         } else {
             //return $this->sendResponse('Unauthorised.','fail',401);

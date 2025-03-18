@@ -15,7 +15,11 @@ class MessageController extends BaseController
     {
         $users = User::all();
         $messages = null;
-        return view('messages.index', compact('users','messages'));
+        $senders_ids = Message::where('receiver_id',1)
+            ->where('read_at',null)
+            ->select('sender_id')
+            ->groupBy('sender_id')->get();
+        return view('messages.index', compact('users','messages','senders_ids'));
     }
 
     public function show(User $web_user)

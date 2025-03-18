@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 use Illuminate\Auth\Events\Verified;
@@ -18,9 +19,7 @@ class VerificationApiController extends BaseController
     use VerifiesEmails;
 
     /**
-
      * Show the email verification notice.
-
      *
 
      */
@@ -37,22 +36,19 @@ class VerificationApiController extends BaseController
      * Mark the authenticated user’s email address as verified.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
      */
 
     public function verify(Request $request)
     {
         DB::beginTransaction();
-        try
-        {
+        try {
 
             $userID = $request['id'];
 
             $user = User::findOrFail($userID);
 
 
-            if (! hash_equals((string) $request->route('hash'), sha1($user->getEmailForVerification())))
-            {
+            if (!hash_equals((string)$request->route('hash'), sha1($user->getEmailForVerification()))) {
                 throw new AuthorizationException;
             }
 
@@ -65,40 +61,27 @@ class VerificationApiController extends BaseController
 
             DB::commit();
             return view('pages.verifySuccess');
-        } catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             DB::rollBack();
             return $this->failed('error verified');
         }
     }
 
+
     /**
-
      * Resend the email verification notification.
-
-     *
-
-     * @param \Illuminate\Http\Request $request
-
-     * @return \Illuminate\Http\Response
-
+     * @param Request $request
+     * @return JsonResponse
      */
-
-    public function resend(Request $request)
+    public function resend(Request $request): JsonResponse
     {
-        if ($request->user()->hasVerifiedEmail()) {
-
-            return response()->json('User already have verified email!', 422);
-
-            // return redirect($this->redirectPath());
-
+        if ($request->user()->hasVerifiedEmail())
+        {
+            return$this->sendResponse('User already have verified email!', 422);
         }
 
-            $request->user()->sendEmailVerificationNotification();
+        $request->user()->sendEmailVerificationNotification();
 
-            return response()->json('The notification has been resubmitted');
-
-              // return back()->with(‘resent’, true);
-
+        return $this->sendResponse('Email verification link sent on your email!');
     }
 }

@@ -12,12 +12,14 @@ class SendNotification extends Notification
     use Queueable;
 
     public $msg;
+    public $link;
     /**
      * Create a new notification instance.
      */
-    public function __construct(string $msg)
+    public function __construct(string $msg, string $link = null)
     {
         $this->msg = $msg;
+        $this->link = $link;
     }
 
     /**
@@ -49,7 +51,8 @@ class SendNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-           'message' => $this->msg
+           'message' => $this->msg,
+           'link'    => $this->link,
         ];
     }
 }

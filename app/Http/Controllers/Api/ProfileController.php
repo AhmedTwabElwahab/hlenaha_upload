@@ -9,26 +9,28 @@ use App\Models\Banners;
 use App\Models\trip;
 use App\Models\User;
 use App\Notifications\activeUserNotification;
+use App\Notifications\SendNotification;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use function PHPUnit\Framework\once;
 
 class ProfileController extends BaseController
 {
     public function index(): JsonResponse
     {
         $data = User::join('drivers', 'users.id', '=', 'drivers.user_id')
-            ->select('users.*', 'drivers.*', 'drivers.id as driver_id')
-            ->where('users.id', auth()->user()->id)->first()->toArray();
+            ->select('users.*', 'drivers.*', 'drivers.id as driver_id','users.id as id')
+            ->where('users.id', auth()->user()->id)->first();
 
         $banners = Banners::all();
-        $trips = Trip::where('driver_id',$data['driver_id'])->get()->toArray();
+        $trips = Trip::where('driver_id',$data->driver_id)->get()->toArray();
 
         return $this->sendResponse([
-            'user_info'      => $data,
+            'user_info'      => $data->toArray(),
             'trips'          => $trips,
             'trips_Revenues' => 0,
             'banners'        => $banners,

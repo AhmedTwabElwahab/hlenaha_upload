@@ -14,14 +14,23 @@
                     <div class="card position-sticky top-1">
                         <ul class="nav flex-column bg-white border-radius-lg p-3">
                             @foreach($users as $user)
-                                <li class="nav-item @isset($web_user) @if($web_user->id == $user->id)bg-gradient-success active_nav  @endif @endisset">
+                                <li class="nav-item @isset($web_user) @if($web_user->id == $user->id) bg-gradient-success active_nav  @endif @endisset">
                                     <a href="{{route('messages.show',$user)}}" class="d-flex py-2 px-1">
+                                       @isset($senders_ids)
+                                           @foreach($senders_ids as $sender)
+                                                @if($user->id == $sender->sender_id)
+                                                    <i class="material-icons">mark_chat_unread</i>
+                                                @endif
+                                           @endforeach
+                                       @endisset
                                         <div>
-                                            <img src="https://material-dashboard-laravel.creative-tim.com/assets/img/team-2.jpg"
+                                            <img src="{{$user->image ?? asset('images/logo/logo_2.png')}}"
                                                  class="avatar avatar-sm ms-3 border-radius-lg" alt="user1">
                                         </div>
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-sm">{{$user->name}}</h6>
+                                            <h6 class="mb-0 text-sm">
+                                                {{$user->name}}
+                                            </h6>
                                             <p class="text-xs text-secondary mb-0">{{$user->email}}</p>
                                         </div>
                                     </a>

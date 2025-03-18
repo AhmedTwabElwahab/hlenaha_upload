@@ -104,7 +104,7 @@ function setDark(el)
 
 
 
-let url            =  window.location.protocol + "//" + location.host +  "/" ;
+let url_msg            =  window.location.protocol + "//" + location.host +  "/" ;
 
 (function ()
 {
@@ -112,7 +112,7 @@ let url            =  window.location.protocol + "//" + location.host +  "/" ;
     let ic = $('#notification_ico');
     axios({
         method: 'POST',
-        url: url + 'messages/getMessages',
+        url: url_msg + 'messages/getMessages',
     }).then((response) =>
     {
         if (response.data != null)
