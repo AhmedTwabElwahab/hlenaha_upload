@@ -46,7 +46,6 @@ class Car extends Model
         'insurance_expiry',
         'description',
         'status',
-
     ];
 
     /**
