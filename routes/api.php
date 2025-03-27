@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BankAccountController;
 use App\Http\Controllers\Api\bankAccountNameController;
 use App\Http\Controllers\Api\BannersController;
+use App\Http\Controllers\Api\CarController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\notificationController;
 use App\Http\Controllers\Api\ProfileController;
@@ -76,5 +77,8 @@ Route::group(['middleware' => ['auth:sanctum']],function ()
 
     //bankAccountName
     Route::get('bankAccountName',[bankAccountNameController::class,'index']);
+
+    //car
+    Route::get('car',[CarController::class,'index']);
 
 });
